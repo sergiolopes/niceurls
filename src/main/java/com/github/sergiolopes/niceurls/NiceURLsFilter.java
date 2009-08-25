@@ -80,11 +80,8 @@ public class NiceURLsFilter implements Filter{
 		// add niceurl parameters to ${params}
 		Map<String, String> parameters = (Map<String, String>) request.getAttribute("NiceURLVRaptorPluginParameterMap");
 		parameters.putAll(result.getParameters());			
-		
-		// TODO change .logic
-		String to = "/" + result.getComponentName() + "." + result.getLogicName() + ".logic"; 
-		if (logger.isTraceEnabled()) logger.trace("Redirecting to VRaptor Servlet: " + to);
-		request.getRequestDispatcher(to).forward(request, response);
+
+		result.execute(request, response);
 	}
 
 	private String extractURI(NiceHttpServletRequest request) {
