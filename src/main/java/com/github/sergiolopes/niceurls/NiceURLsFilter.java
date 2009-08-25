@@ -1,7 +1,6 @@
 package com.github.sergiolopes.niceurls;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -56,7 +55,6 @@ public class NiceURLsFilter implements Filter{
 		       .getFile();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
 			FilterChain filterChain) throws IOException, ServletException {
 
@@ -64,22 +62,16 @@ public class NiceURLsFilter implements Filter{
 		NiceHttpServletRequest request = new NiceHttpServletRequest((HttpServletRequest) servletRequest);
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-		// finds uri
 		String uri = extractURI(request);
 		if (logger.isDebugEnabled()) logger.debug("Hit: "+ uri);
 
-		// what's the result for the url
 		Result result = this.urlResolver.resolveURL(uri);
-		
-		// not found
 		if (result == null) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 		
-		// add niceurl parameters to ${params}
 		request.putParameters(result.getParameters());			
-
 		result.execute(request, response);
 	}
 
