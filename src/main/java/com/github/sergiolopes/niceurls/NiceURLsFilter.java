@@ -1,4 +1,4 @@
-package com.github.sergiolopes.niceurls.servlet;
+package com.github.sergiolopes.niceurls;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,15 +19,16 @@ import com.github.sergiolopes.niceurls.parser.RoutesParser;
 import com.github.sergiolopes.niceurls.resolver.DefaultURLResolver;
 import com.github.sergiolopes.niceurls.resolver.Result;
 import com.github.sergiolopes.niceurls.resolver.URLResolver;
+import com.github.sergiolopes.niceurls.servlet.NiceHttpServletRequest;
 
 
 /**
  * Filters all requests. If the request is to an existing file, process that file.
  * Otherwise, delegates to VRaptorServlet.
  */
-public class NiceURLFilter implements Filter{
+public class NiceURLsFilter implements Filter{
 
-	private static final Logger logger = Logger.getLogger(NiceURLFilter.class);
+	private static final Logger logger = Logger.getLogger(NiceURLsFilter.class);
 	
 	private String rootFolder;
 	private String contextName;
