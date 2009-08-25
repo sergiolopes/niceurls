@@ -1,4 +1,4 @@
-# VRaptor NiceURLs Plugin, by Sergio Lopes (sergio.lopes at caelum.com.br)
+# NiceURLs Filter, by Sergio Lopes (sergio.lopes at caelum.com.br)
 # Example configuration file
 
 # NOTES
@@ -6,55 +6,38 @@
 # Main differences are that order matters and it has a special syntax.
 # See examples below.
 
-# Simple url mapping
-# /desired/path/   =>  componentName.logicName
-
-/           => home.index
-/about/     => home.about
-/test/		=> home.test
+# Client side redirection (using sendRedirect)
+/index.jsp     >>    /
 
 # Wildcard support - anything matches
-/images/*/	=> images.block
+/images/*/     >>   /blocked.html
+
+# Redirection to external sources
+/vraptor/      >>    http://vraptor.org
+
+# Client side redirection with moved permanently header (301)
+/old.jsp      >>>    /new.jsp
+
+# All comments lines start with #
+# /comment/    >>    /ignored.html
+
+# Server side redirect, useful to implement AlwaysLinkToAction pattern
+# or to call an internal framework
+/mycompany/    =>    /jsp/mycompany.jsp
 
 # URL parameters support
 #  - Parameter syntax: ":" followed by the parameter name (characters and/or numbers)
 #  - All parameters are available via request.getParameter 
 
-/categories/:{categoryName}/   => posts.listByCategory
-/blog/:{year}/:{month}/:{day}/ => posts.listByDate
-/search/:{query}/              => posts.search
-
-# Client redirection (using sendRedirect) - use >>
-/index.jsp     >>    /
+/blog/:{year}/:{month}/      => /listPosts.action?year=#{year}&month=#{month}
+/search/:{query}/            >> /search?q=#{query}
 /admin/:{page}.jsp  >>    /admin/#{page}/
 
-# Redirection to external sources
-/vraptor/      >>    http://vraptor.org
-
-# Advanced: client redirection with moved permanently header - use >>>
-/old.jsp      >>>    /new.jsp
-
-# All comments lines start with #
-# /comment/    => comment.ignored
-
-# No logic! Redirect directly to View
-# (useful to implement AlwaysLinkToAction pattern)
-/mycompany/    ==> /jsp/mycompany.jsp
-
-# Dynamic component/logic names (that is: using url parameters to found the component)
-/main/:{logic}/  => home.#{logic}
-
-# Defining params to VRaptor injection
-/inject/:{mybean.id}/  => inject.test
+# Defining advanced params
+/inject/:{mybean.id}/  => /injectTest.action
 
 # We have also include support
 #include more.routes
 
-# Also, we can ignore some urls
+# Also, we can ignore some URLs (just call doFilter)
 /ignore >>!
-
-# Magical default urls! Using right-side variables...
-/:{componentName}/:{logicName}/  => #{componentName}.#{logicName}
-
-# Last rule: old-fashion URLs! Backward compatibility!
-/:{component}.:{logic}.logic  => #{component}.#{logic}
