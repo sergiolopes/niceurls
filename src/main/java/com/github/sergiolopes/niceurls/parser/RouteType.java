@@ -5,6 +5,9 @@ import com.github.sergiolopes.niceurls.consequences.MovedPermanentlyRouteConsequ
 import com.github.sergiolopes.niceurls.consequences.RedirectRouteConsequence;
 import com.github.sergiolopes.niceurls.consequences.RouteConsequence;
 import com.github.sergiolopes.niceurls.consequences.SkipToViewRouteConsequence;
+import com.github.sergiolopes.niceurls.resolver.ParamsContext;
+import com.github.sergiolopes.niceurls.resolver.Result;
+import com.github.sergiolopes.niceurls.resolver.Route;
 
 /**
  * Represents a Route defined by the user. Essentially we have many types of
@@ -32,5 +35,9 @@ public enum RouteType {
 	
 	public RouteConsequence getRouteConsequence() {
 		return routeConsequence;
+	}
+
+	public Result generateResult(Route route, ParamsContext context) {
+		return routeConsequence.generateResult(route, context);
 	}
 }

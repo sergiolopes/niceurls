@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.github.sergiolopes.niceurls.consequences.RouteConsequence;
 import com.github.sergiolopes.niceurls.parser.RouteType;
 
 
@@ -19,7 +18,6 @@ import com.github.sergiolopes.niceurls.parser.RouteType;
 public class Route {
 	
 	private final String to;
-	private final RouteConsequence routeConsequence;
 	private final RouteType type;
 	private final List<String> paramNames = new LinkedList<String>();
 	
@@ -29,7 +27,6 @@ public class Route {
 		this.type = type;
 		this.parseFrom(from);
 		this.to = to;
-		this.routeConsequence = type.getRouteConsequence();
 	}
 	
 	/**
@@ -63,7 +60,7 @@ public class Route {
 	}
 	
 	public Result generateResult(ParamsContext context) {
-		return routeConsequence.generateResult(this, context);
+		return type.generateResult(this, context);
 	}
 
 	public Pattern getFromPattern() {
@@ -72,10 +69,6 @@ public class Route {
 	
 	public List<String> getParamNames() {
 		return Collections.unmodifiableList(paramNames);
-	}
-	
-	public RouteConsequence getRouteConsequence() {
-		return routeConsequence;
 	}
 	
 	public String evaluateTo(ParamsContext context) {
