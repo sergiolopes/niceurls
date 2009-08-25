@@ -1,8 +1,8 @@
 package com.github.sergiolopes.niceurls.consequences;
 
 import com.github.sergiolopes.niceurls.resolver.ParamsContext;
-import com.github.sergiolopes.niceurls.resolver.Result;
 import com.github.sergiolopes.niceurls.resolver.Route;
+import com.github.sergiolopes.niceurls.results.Result;
 
 public class SkipToViewRouteConsequence implements RouteConsequence {
 	

@@ -1,9 +1,11 @@
-package com.github.sergiolopes.niceurls.resolver;
+package com.github.sergiolopes.niceurls.results;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.github.sergiolopes.niceurls.resolver.ParamsContext;
 
 /**
  * Represents a result to an URL that should be executed.

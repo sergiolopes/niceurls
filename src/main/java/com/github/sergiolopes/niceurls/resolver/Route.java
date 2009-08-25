@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.sergiolopes.niceurls.parser.RouteType;
+import com.github.sergiolopes.niceurls.results.Result;
 
 
 /**

@@ -6,8 +6,8 @@ import com.github.sergiolopes.niceurls.consequences.RedirectRouteConsequence;
 import com.github.sergiolopes.niceurls.consequences.RouteConsequence;
 import com.github.sergiolopes.niceurls.consequences.SkipToViewRouteConsequence;
 import com.github.sergiolopes.niceurls.resolver.ParamsContext;
-import com.github.sergiolopes.niceurls.resolver.Result;
 import com.github.sergiolopes.niceurls.resolver.Route;
+import com.github.sergiolopes.niceurls.results.Result;
 
 /**
  * Represents a Route defined by the user. Essentially we have many types of
