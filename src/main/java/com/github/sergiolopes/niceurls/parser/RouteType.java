@@ -1,13 +1,11 @@
 package com.github.sergiolopes.niceurls.parser;
 
-import com.github.sergiolopes.niceurls.consequences.IgnoreRouteConsequence;
-import com.github.sergiolopes.niceurls.consequences.MovedPermanentlyRouteConsequence;
-import com.github.sergiolopes.niceurls.consequences.RedirectRouteConsequence;
-import com.github.sergiolopes.niceurls.consequences.RouteConsequence;
-import com.github.sergiolopes.niceurls.consequences.SkipToViewRouteConsequence;
 import com.github.sergiolopes.niceurls.resolver.ParamsContext;
 import com.github.sergiolopes.niceurls.resolver.Route;
+import com.github.sergiolopes.niceurls.results.MovedPermanentlyResult;
+import com.github.sergiolopes.niceurls.results.MovedTemporarilyResult;
 import com.github.sergiolopes.niceurls.results.Result;
+import com.github.sergiolopes.niceurls.results.ServerSideRedirectResult;
 
 /**
  * Represents a Route defined by the user. Essentially we have many types of
@@ -16,28 +14,43 @@ import com.github.sergiolopes.niceurls.results.Result;
 public enum RouteType {
 	
 	// order matters!! be careful
-	IGNORE(">>!", new IgnoreRouteConsequence()),
-	MOVED_PERMANENTLY (">>>", new MovedPermanentlyRouteConsequence()), 
-	REDIRECT (">>", new RedirectRouteConsequence()), 
-	SKIP_TO_VIEW ("=>", new SkipToViewRouteConsequence());
+	IGNORE(">>!") {
+		public Result createResult() {
+			return null;
+		}
+	},
+	MOVED_PERMANENTLY (">>>") {
+		public Result createResult() {
+			return new MovedPermanentlyResult();
+		}
+	}, 
+	REDIRECT (">>") {
+		public Result createResult() {
+			return new MovedTemporarilyResult();
+		}
+	}, 
+	SKIP_TO_VIEW ("=>") {
+		public Result createResult() {
+			return new ServerSideRedirectResult();
+		}
+	};
 
 	private final String separator;
-	private final RouteConsequence routeConsequence;
 	
-	RouteType(String s, RouteConsequence rc) {
+	RouteType(String s) {
 		this.separator = s;
-		this.routeConsequence = rc;
 	}
 	
 	public String getSeparator() {
 		return separator;
 	}
 	
-	public RouteConsequence getRouteConsequence() {
-		return routeConsequence;
-	}
-
+	abstract Result createResult();
+	
 	public Result generateResult(Route route, ParamsContext context) {
-		return routeConsequence.generateResult(route, context);
+		Result result = createResult();
+		if (result != null)
+			result.init(route, context);
+		return result;
 	}
 }
