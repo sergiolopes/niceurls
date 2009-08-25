@@ -1,6 +1,5 @@
 package com.github.sergiolopes.niceurls.parser;
 
-import com.github.sergiolopes.niceurls.consequences.DynamicRouteConsequence;
 import com.github.sergiolopes.niceurls.consequences.IgnoreRouteConsequence;
 import com.github.sergiolopes.niceurls.consequences.MovedPermanentlyRouteConsequence;
 import com.github.sergiolopes.niceurls.consequences.RedirectRouteConsequence;
@@ -17,8 +16,7 @@ public enum RouteDefinition {
 	IGNORE(">>!", new IgnoreRouteConsequence()),
 	MOVED_PERMANENTLY (">>>", new MovedPermanentlyRouteConsequence()), 
 	REDIRECT (">>", new RedirectRouteConsequence()), 
-	SKIP_TO_VIEW ("==>", new SkipToViewRouteConsequence()),
-	LOGIC ("=>", new DynamicRouteConsequence()),;
+	SKIP_TO_VIEW ("=>", new SkipToViewRouteConsequence());
 
 	private final String separator;
 	private final RouteConsequence routeConsequence;
