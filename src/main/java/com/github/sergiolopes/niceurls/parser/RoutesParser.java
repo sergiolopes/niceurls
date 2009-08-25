@@ -60,11 +60,11 @@ public class RoutesParser {
 		
 		if (isComment(line)) return;
 		
-		for (RouteType rd : RouteType.values()) {
-			if (line.indexOf(rd.getSeparator()) > 0) {
+		for (RouteType routeType : RouteType.values()) {
+			if (line.indexOf(routeType.getSeparator()) > 0) {
 				
-				String[] split = line.split("\\s*" + rd.getSeparator()	+ "\\s*");
-				resolver.addRoute(new Route(split[0], split.length == 1? null: split[1], rd.getRouteConsequence()));
+				String[] split = line.split("\\s*" + routeType.getSeparator()	+ "\\s*");
+				resolver.addRoute(new Route(split[0], split.length == 1? null: split[1], routeType));
 
 				if (logger.isTraceEnabled())
 					logger.trace("NiceRoute found: " + split[0] + " to " + (split.length == 1? "": split[1]));

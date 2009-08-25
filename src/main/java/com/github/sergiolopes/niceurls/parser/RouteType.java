@@ -10,7 +10,7 @@ import com.github.sergiolopes.niceurls.consequences.SkipToViewRouteConsequence;
  * Represents a Route defined by the user. Essentially we have many types of
  * routes, with different syntaxes and different Consequences;
  */
-enum RouteType {
+public enum RouteType {
 	
 	// order matters!! be careful
 	IGNORE(">>!", new IgnoreRouteConsequence()),

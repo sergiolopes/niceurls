@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.sergiolopes.niceurls.consequences.RouteConsequence;
+import com.github.sergiolopes.niceurls.parser.RouteType;
 
 
 /**
@@ -17,15 +18,18 @@ import com.github.sergiolopes.niceurls.consequences.RouteConsequence;
  */
 public class Route {
 	
-	private Pattern fromPattern;
-	private String to;
-	private RouteConsequence routeConsequence;
-	private List<String> paramNames = new LinkedList<String>();
+	private final String to;
+	private final RouteConsequence routeConsequence;
+	private final RouteType type;
+	private final List<String> paramNames = new LinkedList<String>();
 	
-	public Route(String from, String to, RouteConsequence rc) {
+	private Pattern fromPattern;
+
+	public Route(String from, String to, RouteType type) {
+		this.type = type;
 		this.parseFrom(from);
 		this.to = to;
-		this.routeConsequence = rc;
+		this.routeConsequence = type.getRouteConsequence();
 	}
 	
 	/**
