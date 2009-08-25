@@ -15,6 +15,7 @@ import com.github.sergiolopes.niceurls.resolver.Route;
 public abstract class Result {
 
 	private ParamsContext paramsContext;
+	protected String uri;
 
 	public void setParamsContext(ParamsContext paramsContext) {
 		this.paramsContext = paramsContext;
@@ -24,7 +25,6 @@ public abstract class Result {
 		return paramsContext.getParameters();
 	}
 	
-	public abstract void init (Route route, ParamsContext paramsContext);
 	public abstract void execute (HttpServletRequest request, HttpServletResponse response);
 
 	protected String absoluteURL(HttpServletRequest request, String uri) {
@@ -32,6 +32,10 @@ public abstract class Result {
 			return request.getContextPath() + uri;
 		else
 			return uri;
+	}
+
+	public void init(Route route, ParamsContext paramsContext) {
+		uri = route.evaluateTo(paramsContext);
 	}
 	
 }
