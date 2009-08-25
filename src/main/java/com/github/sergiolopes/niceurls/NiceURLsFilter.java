@@ -78,8 +78,7 @@ public class NiceURLsFilter implements Filter{
 		}
 		
 		// add niceurl parameters to ${params}
-		Map<String, String> parameters = (Map<String, String>) request.getAttribute("NiceURLVRaptorPluginParameterMap");
-		parameters.putAll(result.getParameters());			
+		request.putParameters(result.getParameters());			
 
 		result.execute(request, response);
 	}

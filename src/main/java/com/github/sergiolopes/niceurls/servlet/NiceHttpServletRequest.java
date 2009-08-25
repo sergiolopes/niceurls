@@ -18,7 +18,6 @@ public class NiceHttpServletRequest extends HttpServletRequestWrapper {
 	
 	public NiceHttpServletRequest(HttpServletRequest request) {
 		super(request);
-		this.setAttribute("NiceURLVRaptorPluginParameterMap", urlParameters);
 	}
 
 	@Override
@@ -67,5 +66,9 @@ public class NiceHttpServletRequest extends HttpServletRequestWrapper {
 		if (paramValues == null)
 			paramValues = new String[]{urlParameters.get(name)};
 		return paramValues;
+	}
+	
+	public void putParameters(Map<String, String> params) {
+		this.urlParameters.putAll(params);
 	}
 }
