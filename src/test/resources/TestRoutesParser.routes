@@ -1,0 +1,13 @@
+# comment => comment
+/           => home.index
+/about/     => home.about
+/images/*/	=> images.block
+/blog/:year/:month/:day/     => posts.listByDate
+/contact.jsp   >>    /contact/
+
+#include /more.routes
+
+/vraptor/      >>    http://vraptor.org
+/old.jsp      >>>    /new.jsp
+/mycompany/    ==> /jsp/mycompany.jsp
+/:component.:logic.logic  => #component.#logic
