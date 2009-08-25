@@ -13,7 +13,7 @@ import com.github.sergiolopes.niceurls.consequences.RouteConsequence;
  * Represents a NiceURL compiled Route.
  * 
  * It has a regexp that the final URL should match.
- * Also has a result (usually component and logic names) and a list of parameters names.
+ * Also has a list of parameters names.
  */
 public class Route {
 	
@@ -73,7 +73,6 @@ public class Route {
 	public RouteConsequence getRouteConsequence() {
 		return routeConsequence;
 	}
-	
 	
 	public String evaluateTo(ParamsContext context) {
 		// find all variables and substitutes with parameter values
