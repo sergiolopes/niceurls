@@ -10,7 +10,7 @@ import com.github.sergiolopes.niceurls.consequences.SkipToViewRouteConsequence;
  * Represents a Route defined by the user. Essentially we have many types of
  * routes, with different syntaxes and different Consequences;
  */
-public enum RouteDefinition {
+enum RouteType {
 	
 	// order matters!! be careful
 	IGNORE(">>!", new IgnoreRouteConsequence()),
@@ -21,7 +21,7 @@ public enum RouteDefinition {
 	private final String separator;
 	private final RouteConsequence routeConsequence;
 	
-	RouteDefinition(String s, RouteConsequence rc) {
+	RouteType(String s, RouteConsequence rc) {
 		this.separator = s;
 		this.routeConsequence = rc;
 	}

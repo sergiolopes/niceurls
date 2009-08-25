@@ -60,7 +60,7 @@ public class RoutesParser {
 		
 		if (isComment(line)) return;
 		
-		for (RouteDefinition rd : RouteDefinition.values()) {
+		for (RouteType rd : RouteType.values()) {
 			if (line.indexOf(rd.getSeparator()) > 0) {
 				
 				String[] split = line.split("\\s*" + rd.getSeparator()	+ "\\s*");
