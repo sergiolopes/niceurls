@@ -25,7 +25,9 @@ public abstract class Result {
 		return paramsContext.getParameters();
 	}
 	
-	public abstract void execute (HttpServletRequest request, HttpServletResponse response);
+	public void init(Route route, ParamsContext paramsContext) {
+		uri = route.evaluateTo(paramsContext);
+	}
 
 	protected String absoluteURL(HttpServletRequest request, String uri) {
 		if (uri.startsWith("/"))
@@ -33,9 +35,6 @@ public abstract class Result {
 		else
 			return uri;
 	}
-
-	public void init(Route route, ParamsContext paramsContext) {
-		uri = route.evaluateTo(paramsContext);
-	}
 	
+	public abstract void execute (HttpServletRequest request, HttpServletResponse response);
 }
