@@ -1,12 +1,12 @@
 package com.github.sergiolopes.niceurls;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -21,29 +21,24 @@ import com.github.sergiolopes.niceurls.resolver.Result;
 import com.github.sergiolopes.niceurls.resolver.URLResolver;
 import com.github.sergiolopes.niceurls.servlet.NiceHttpServletRequest;
 
-
-/**
- * Filters all requests. If the request is to an existing file, process that file.
- * Otherwise, delegates to VRaptorServlet.
- */
 public class NiceURLsFilter implements Filter{
 
 	private static final Logger logger = Logger.getLogger(NiceURLsFilter.class);
-	
-	private String rootFolder;
-	private String contextName;
+	private static final String DEFAULT_NICEURL_FILENAME = "/niceurl.routes";
+	private static final String ROUTES_FILENAME_PARAM = "niceurls_file";
 
+	private String contextName;
 	private URLResolver urlResolver;
 
 	public void init(final FilterConfig fc) throws ServletException {
 		if (logger.isTraceEnabled()) logger.trace("Filter init");
 		
+		String configFile = resolveConfigFile(fc.getServletContext());
+		
         // init config file
         this.urlResolver = new DefaultURLResolver();
         RoutesParser parser = new RoutesParser(urlResolver);
         
-        // TODO let user change file name
-        String configFile = this.getClass().getResource("/niceurl.routes").getFile();
         try {
 			parser.parseFile(configFile);
 		} catch (IOException e) {
@@ -51,8 +46,14 @@ public class NiceURLsFilter implements Filter{
 		}
 		
 		// caches some strings
-		this.rootFolder = getRootFolder();
 		this.contextName = fc.getServletContext().getContextPath();
+	}
+
+	private String resolveConfigFile(ServletContext servletContext) {
+		String filenameParam = servletContext.getInitParameter(ROUTES_FILENAME_PARAM);
+		return getClass()
+		       .getResource(filenameParam != null? filenameParam : DEFAULT_NICEURL_FILENAME)
+		       .getFile();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -67,44 +68,27 @@ public class NiceURLsFilter implements Filter{
 		String uri = extractURI(request);
 		if (logger.isDebugEnabled()) logger.debug("Hit: "+ uri);
 
-		File f = new File(rootFolder + uri);
+		// what's the result for the url
+		Result result = this.urlResolver.resolveURL(uri);
 		
-		// TODO cache existent files
-		if (f.exists() && !uri.equals("/")) {
-			if (logger.isTraceEnabled()) logger.trace("File exists, redirecting");
+		// not found
+		if (result == null) {
 			filterChain.doFilter(request, response);
-		} else {
-
-			// what's the result for the url
-			Result result = this.urlResolver.resolveURL(uri);
-			
-			// not found
-			if (result == null) {
-				if (uri.endsWith(".logic")) {
-					response.sendError(404, uri + " not found");
-					return;
-				}
-				filterChain.doFilter(request, response);
-				return;
-			}
-			
-			// add niceurl parameters to ${params}
-			Map<String, String> parameters = (Map<String, String>) request.getAttribute("NiceURLVRaptorPluginParameterMap");
-			parameters.putAll(result.getParameters());			
-			
-			// TODO change .logic
-			String to = "/" + result.getComponentName() + "." + result.getLogicName() + ".logic"; 
-			if (logger.isTraceEnabled()) logger.trace("Redirecting to VRaptor Servlet: " + to);
-			request.getRequestDispatcher(to).forward(request, response);
+			return;
 		}
+		
+		// add niceurl parameters to ${params}
+		Map<String, String> parameters = (Map<String, String>) request.getAttribute("NiceURLVRaptorPluginParameterMap");
+		parameters.putAll(result.getParameters());			
+		
+		// TODO change .logic
+		String to = "/" + result.getComponentName() + "." + result.getLogicName() + ".logic"; 
+		if (logger.isTraceEnabled()) logger.trace("Redirecting to VRaptor Servlet: " + to);
+		request.getRequestDispatcher(to).forward(request, response);
 	}
 
 	private String extractURI(NiceHttpServletRequest request) {
 		return request.getRequestURI().substring(this.contextName.length());
-	}
-
-	private String getRootFolder() {
-		return this.getClass().getResource("/").getFile().replaceAll("WEB-INF/.*/", "");
 	}
 
 	public void destroy() {
