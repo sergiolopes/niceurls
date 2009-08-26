@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.github.sergiolopes.niceurls.http.ParamsContext;
 import com.github.sergiolopes.niceurls.parser.RouteType;
 
 

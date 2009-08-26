@@ -3,6 +3,7 @@ package com.github.sergiolopes.niceurls.resolver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.github.sergiolopes.niceurls.http.ParamsContext;
 import com.github.sergiolopes.niceurls.results.ResultStrategy;
 
 public class Result {

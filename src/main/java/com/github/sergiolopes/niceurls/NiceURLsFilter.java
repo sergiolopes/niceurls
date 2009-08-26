@@ -14,11 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.github.sergiolopes.niceurls.http.NiceHttpServletRequest;
 import com.github.sergiolopes.niceurls.parser.RoutesParser;
 import com.github.sergiolopes.niceurls.resolver.DefaultURLResolver;
 import com.github.sergiolopes.niceurls.resolver.Result;
 import com.github.sergiolopes.niceurls.resolver.URLResolver;
-import com.github.sergiolopes.niceurls.servlet.NiceHttpServletRequest;
 
 public class NiceURLsFilter implements Filter{
 

@@ -1,4 +1,4 @@
-package com.github.sergiolopes.niceurls.servlet;
+package com.github.sergiolopes.niceurls.http;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
-import com.github.sergiolopes.niceurls.resolver.ParamsContext;
 
 /**
  * Overrides all parameter methods to get values from our special Map 

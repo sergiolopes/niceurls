@@ -1,4 +1,4 @@
-package com.github.sergiolopes.niceurls.resolver;
+package com.github.sergiolopes.niceurls.http;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class ParamsContext {
 		return this.parameters.get(key);
 	}
 	
-	public Map<String, String> getParametersAsMap() {
+	Map<String, String> getParametersAsMap() {
 		return parameters;
 	}
 
