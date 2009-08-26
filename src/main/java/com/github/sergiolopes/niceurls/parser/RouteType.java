@@ -1,10 +1,8 @@
 package com.github.sergiolopes.niceurls.parser;
 
-import com.github.sergiolopes.niceurls.resolver.ParamsContext;
-import com.github.sergiolopes.niceurls.resolver.Route;
 import com.github.sergiolopes.niceurls.results.MovedPermanentlyResult;
 import com.github.sergiolopes.niceurls.results.MovedTemporarilyResult;
-import com.github.sergiolopes.niceurls.results.Result;
+import com.github.sergiolopes.niceurls.results.ResultStrategy;
 import com.github.sergiolopes.niceurls.results.ServerSideRedirectResult;
 
 /**
@@ -15,22 +13,22 @@ public enum RouteType {
 	
 	// order matters!! be careful
 	IGNORE(">>!") {
-		public Result createResult() {
+		public ResultStrategy createResultStrategy() {
 			return null;
 		}
 	},
 	MOVED_PERMANENTLY (">>>") {
-		public Result createResult() {
+		public ResultStrategy createResultStrategy() {
 			return new MovedPermanentlyResult();
 		}
 	}, 
 	REDIRECT (">>") {
-		public Result createResult() {
+		public ResultStrategy createResultStrategy() {
 			return new MovedTemporarilyResult();
 		}
 	}, 
 	SKIP_TO_VIEW ("=>") {
-		public Result createResult() {
+		public ResultStrategy createResultStrategy() {
 			return new ServerSideRedirectResult();
 		}
 	};
@@ -45,12 +43,5 @@ public enum RouteType {
 		return separator;
 	}
 	
-	abstract Result createResult();
-	
-	public Result generateResult(Route route, ParamsContext context) {
-		Result result = createResult();
-		if (result != null)
-			result.init(route, context);
-		return result;
-	}
+	public abstract ResultStrategy createResultStrategy();
 }

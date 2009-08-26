@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-public class MovedTemporarilyResult extends Result {
+public class MovedTemporarilyResult extends ResultStrategy {
 
 	private final static Logger logger = Logger.getLogger(MovedTemporarilyResult.class);
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(String uri, HttpServletRequest request, HttpServletResponse response) {
 		if (logger.isDebugEnabled()) logger.debug("Redirecting to " + uri);
 		try {
 			response.sendRedirect(absoluteURL(request, uri));

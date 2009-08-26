@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.sergiolopes.niceurls.parser.RouteType;
-import com.github.sergiolopes.niceurls.results.Result;
 
 
 /**
@@ -60,10 +59,10 @@ public class Route {
 		
 	}
 	
-	public Result generateResult(ParamsContext context) {
-		return type.generateResult(this, context);
+	public RouteType getType() {
+		return type;
 	}
-
+	
 	public Pattern getFromPattern() {
 		return fromPattern;
 	}

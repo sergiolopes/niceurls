@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 
-public class ServerSideRedirectResult extends Result {
+public class ServerSideRedirectResult extends ResultStrategy {
 
 	private final static Logger logger = Logger.getLogger(ServerSideRedirectResult.class);
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(String uri, HttpServletRequest request, HttpServletResponse response) {
 		if (logger.isDebugEnabled()) logger.debug("Redirecting to " + uri);
 		try {
 			request.getRequestDispatcher(uri).forward(request, response);

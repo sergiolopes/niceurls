@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-public class MovedPermanentlyResult extends Result {
+public class MovedPermanentlyResult extends ResultStrategy {
 
 	private final static Logger logger = Logger.getLogger(MovedPermanentlyResult.class);
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(String uri, HttpServletRequest request, HttpServletResponse response) {
 		if (logger.isDebugEnabled()) logger.debug("Redirecting to " + absoluteURL(request, uri));
 		response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		response.addHeader("Location", absoluteURL(request, uri));

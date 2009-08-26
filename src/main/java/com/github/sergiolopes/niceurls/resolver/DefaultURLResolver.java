@@ -38,10 +38,11 @@ public class DefaultURLResolver implements URLResolver {
 					context.addParameter(param, m.group(i++));
 				}
 
-				Result result = route.generateResult(context);
-				if (result != null)
-					result.setParamsContext(context);
-				if (logger.isTraceEnabled()) logger.trace("Result found: " + result);
+				Result result = new Result();
+				result.setParamsContext(context);
+				result.setStrategy(route.getType().createResultStrategy());
+				result.setUri(route.evaluateTo(context));
+				
 				return result;
 			}
 		}
