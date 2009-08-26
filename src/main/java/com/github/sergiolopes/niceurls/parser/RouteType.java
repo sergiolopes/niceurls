@@ -12,36 +12,24 @@ import com.github.sergiolopes.niceurls.results.ServerSideRedirectResult;
 public enum RouteType {
 	
 	// order matters!! be careful
-	IGNORE(">>!") {
-		public ResultStrategy createResultStrategy() {
-			return null;
-		}
-	},
-	MOVED_PERMANENTLY (">>>") {
-		public ResultStrategy createResultStrategy() {
-			return new MovedPermanentlyResult();
-		}
-	}, 
-	REDIRECT (">>") {
-		public ResultStrategy createResultStrategy() {
-			return new MovedTemporarilyResult();
-		}
-	}, 
-	SKIP_TO_VIEW ("=>") {
-		public ResultStrategy createResultStrategy() {
-			return new ServerSideRedirectResult();
-		}
-	};
+	IGNORE(">>!", null),
+	MOVED_PERMANENTLY (">>>",new MovedPermanentlyResult()), 
+	REDIRECT (">>",new MovedTemporarilyResult()), 
+	SKIP_TO_VIEW ("=>", new ServerSideRedirectResult());
 
 	private final String separator;
+	private final ResultStrategy strategy;
 	
-	RouteType(String s) {
+	RouteType(String s, ResultStrategy resultStrategy) {
 		this.separator = s;
+		strategy = resultStrategy;
 	}
 	
 	public String getSeparator() {
 		return separator;
 	}
 	
-	public abstract ResultStrategy createResultStrategy();
+	public ResultStrategy getResultStrategy() {
+		return strategy;
+	}
 }

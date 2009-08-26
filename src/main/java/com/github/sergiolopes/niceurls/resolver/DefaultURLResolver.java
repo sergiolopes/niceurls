@@ -40,7 +40,7 @@ public class DefaultURLResolver implements URLResolver {
 
 				Result result = new Result();
 				result.setParamsContext(context);
-				result.setStrategy(route.getType().createResultStrategy());
+				result.setStrategy(route.getType().getResultStrategy());
 				result.setUri(route.evaluateTo(context));
 				
 				return result;
