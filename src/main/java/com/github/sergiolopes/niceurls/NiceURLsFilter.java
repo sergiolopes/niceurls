@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 
 import com.github.sergiolopes.niceurls.http.NiceHttpServletRequest;
 import com.github.sergiolopes.niceurls.parser.RoutesParser;
-import com.github.sergiolopes.niceurls.resolver.DefaultURLResolver;
 import com.github.sergiolopes.niceurls.resolver.Result;
 import com.github.sergiolopes.niceurls.resolver.URLResolver;
 
@@ -34,8 +33,7 @@ public class NiceURLsFilter implements Filter{
 		
 		String configFile = resolveConfigFile(fc.getServletContext());
 		
-        // init config file
-        this.urlResolver = new DefaultURLResolver();
+        this.urlResolver = new URLResolver();
         RoutesParser parser = new RoutesParser(urlResolver);
         
         try {

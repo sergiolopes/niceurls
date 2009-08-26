@@ -1,23 +1,59 @@
 package com.github.sergiolopes.niceurls.resolver;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+
+import org.apache.log4j.Logger;
+
+import com.github.sergiolopes.niceurls.http.ParamsContext;
 
 
 /**
- * What does an URLResolver do? Resolves URLs.
+ * Default implementation to a URLResolver
  */
-public interface URLResolver {
-	/**
-	 * Given an url, returns the Result
-	 * @param url
-	 * @return the Result
-	 */
-	Result resolveURL (String url);
+public class URLResolver {
+
+	private final static Logger logger = Logger.getLogger(URLResolver.class);
+	private final List<Route> routes;
 	
-	/**
-	 * 
-	 * @param route
-	 * @param result
-	 * @param rc
-	 */
-	void addRoute(Route route);
+	public URLResolver() {
+		this.routes = new ArrayList<Route>();
+	}
+	
+	public void addRoute(Route route) {
+		this.routes.add(route);
+	}
+
+	public Result resolveURL(String url) {
+		if (logger.isTraceEnabled()) logger.trace("Trying to resolve " + url);
+		
+		for (Route route : this.routes) {
+			Matcher m = route.getFromPattern().matcher(url);
+			if (m.matches()) {
+				
+				ParamsContext context = new ParamsContext();
+				// parse variables
+				int i = 1;
+				for (String param : route.getParamNames()) {
+					context.addParameter(param, m.group(i++));
+				}
+
+				Result result = new Result();
+				result.setParamsContext(context);
+				result.setStrategy(route.getType().getResultStrategy());
+				result.setUri(route.evaluateTo(context));
+				
+				return result;
+			}
+		}
+		if (logger.isTraceEnabled()) logger.trace("NiceURL doesn't know this URL");
+		return null;
+	}
+	
+	public List<Route> getRoutes() {
+		return routes;
+	}
+
+
 }
