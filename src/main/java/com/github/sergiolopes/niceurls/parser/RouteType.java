@@ -1,9 +1,9 @@
 package com.github.sergiolopes.niceurls.parser;
 
-import com.github.sergiolopes.niceurls.results.MovedPermanentlyResult;
-import com.github.sergiolopes.niceurls.results.MovedTemporarilyResult;
+import com.github.sergiolopes.niceurls.results.MovedPermanently;
+import com.github.sergiolopes.niceurls.results.MovedTemporarily;
 import com.github.sergiolopes.niceurls.results.ResultStrategy;
-import com.github.sergiolopes.niceurls.results.ServerSideRedirectResult;
+import com.github.sergiolopes.niceurls.results.ServerSideRedirect;
 
 /**
  * Represents a Route defined by the user. Essentially we have many types of
@@ -13,9 +13,9 @@ public enum RouteType {
 	
 	// order matters!! be careful
 	IGNORE            (">>!", null),
-	MOVED_PERMANENTLY (">>>", new MovedPermanentlyResult()), 
-	REDIRECT          (">>" , new MovedTemporarilyResult()), 
-	SKIP_TO_VIEW      ("=>" , new ServerSideRedirectResult());
+	MOVED_PERMANENTLY (">>>", new MovedPermanently()), 
+	REDIRECT          (">>" , new MovedTemporarily()), 
+	SKIP_TO_VIEW      ("=>" , new ServerSideRedirect());
 
 	private final String separator;
 	private final ResultStrategy strategy;

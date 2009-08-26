@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-public class MovedPermanentlyResult extends ResultStrategy {
+public class MovedPermanently extends ResultStrategy {
 
-	private final static Logger logger = Logger.getLogger(MovedPermanentlyResult.class);
+	private final static Logger logger = Logger.getLogger(MovedPermanently.class);
 	
 	@Override
 	public void execute(String uri, HttpServletRequest request, HttpServletResponse response) {
