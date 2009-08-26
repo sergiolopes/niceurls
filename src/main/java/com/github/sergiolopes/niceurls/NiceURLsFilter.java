@@ -71,8 +71,8 @@ public class NiceURLsFilter implements Filter{
 			return;
 		}
 		
-		request.putParameters(result.getParamsContext().getParameters());			
-		result.getStrategy().execute(result.getUri(), request, response);
+		request.putParameters(result.getParameters());			
+		result.execute(request, response);
 	}
 
 	private String extractURI(NiceHttpServletRequest request) {

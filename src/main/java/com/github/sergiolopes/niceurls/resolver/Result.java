@@ -1,5 +1,10 @@
 package com.github.sergiolopes.niceurls.resolver;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.github.sergiolopes.niceurls.results.ResultStrategy;
 
 public class Result {
@@ -8,22 +13,30 @@ public class Result {
 	private String uri;
 	private ParamsContext paramsContext;
 	
-	public ResultStrategy getStrategy() {
-		return strategy;
-	}
-	public void setStrategy(ResultStrategy strategy) {
+
+	void setStrategy(ResultStrategy strategy) {
 		this.strategy = strategy;
 	}
-	public String getUri() {
-		return uri;
-	}
-	public void setUri(String uri) {
+
+	void setUri(String uri) {
 		this.uri = uri;
 	}
-	public ParamsContext getParamsContext() {
-		return paramsContext;
-	}
-	public void setParamsContext(ParamsContext paramsContext) {
+	void setParamsContext(ParamsContext paramsContext) {
 		this.paramsContext = paramsContext;
+	}
+	
+	/**
+	 * Executes this result with the given request and response
+	 */
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		strategy.execute(uri, request, response);		
+	}
+
+	/**
+	 * Returns all parameters names and values
+	 * @return
+	 */
+	public Map<String,String> getParameters() {
+		return paramsContext.getParameters();
 	}
 }
