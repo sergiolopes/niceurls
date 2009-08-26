@@ -6,7 +6,6 @@ import java.util.regex.Matcher;
 
 import org.apache.log4j.Logger;
 
-import com.github.sergiolopes.niceurls.results.Result;
 
 /**
  * Default implementation to a URLResolver

@@ -12,10 +12,10 @@ import com.github.sergiolopes.niceurls.results.ServerSideRedirectResult;
 public enum RouteType {
 	
 	// order matters!! be careful
-	IGNORE(">>!", null),
-	MOVED_PERMANENTLY (">>>",new MovedPermanentlyResult()), 
-	REDIRECT (">>",new MovedTemporarilyResult()), 
-	SKIP_TO_VIEW ("=>", new ServerSideRedirectResult());
+	IGNORE            (">>!", null),
+	MOVED_PERMANENTLY (">>>", new MovedPermanentlyResult()), 
+	REDIRECT          (">>" , new MovedTemporarilyResult()), 
+	SKIP_TO_VIEW      ("=>" , new ServerSideRedirectResult());
 
 	private final String separator;
 	private final ResultStrategy strategy;

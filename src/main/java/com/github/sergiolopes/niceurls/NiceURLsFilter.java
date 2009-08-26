@@ -16,8 +16,8 @@ import org.apache.log4j.Logger;
 
 import com.github.sergiolopes.niceurls.parser.RoutesParser;
 import com.github.sergiolopes.niceurls.resolver.DefaultURLResolver;
+import com.github.sergiolopes.niceurls.resolver.Result;
 import com.github.sergiolopes.niceurls.resolver.URLResolver;
-import com.github.sergiolopes.niceurls.results.Result;
 import com.github.sergiolopes.niceurls.servlet.NiceHttpServletRequest;
 
 public class NiceURLsFilter implements Filter{

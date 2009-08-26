@@ -5,7 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Represents a result to an URL that should be executed.
- * It has a componentName, a logicName and one parameters Map. 
+ * It has a componentName, a logicName and one parameters Map.
+ * 
+ *  Implementations should be prepared to instance sharing (possibly by not having state).
  */
 public abstract class ResultStrategy {
 

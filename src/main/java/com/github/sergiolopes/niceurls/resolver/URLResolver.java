@@ -1,6 +1,5 @@
 package com.github.sergiolopes.niceurls.resolver;
 
-import com.github.sergiolopes.niceurls.results.Result;
 
 
 /**

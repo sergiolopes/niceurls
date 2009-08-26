@@ -1,6 +1,6 @@
-package com.github.sergiolopes.niceurls.results;
+package com.github.sergiolopes.niceurls.resolver;
 
-import com.github.sergiolopes.niceurls.resolver.ParamsContext;
+import com.github.sergiolopes.niceurls.results.ResultStrategy;
 
 public class Result {
 	
