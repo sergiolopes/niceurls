@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import org.apache.log4j.Logger;
 
 import com.github.sergiolopes.niceurls.http.ParamsContext;
+import com.github.sergiolopes.niceurls.results.ResultStrategy;
 
 
 /**
@@ -32,19 +33,16 @@ public class URLResolver {
 			Matcher m = route.getFromPattern().matcher(url);
 			if (m.matches()) {
 				
-				ParamsContext context = new ParamsContext();
+				ParamsContext paramsContext = new ParamsContext();
 				// parse variables
 				int i = 1;
 				for (String param : route.getParamNames()) {
-					context.addParameter(param, m.group(i++));
+					paramsContext.addParameter(param, m.group(i++));
 				}
 
-				Result result = new Result();
-				result.setParamsContext(context);
-				result.setStrategy(route.getType().getResultStrategy());
-				result.setUri(route.evaluateTo(context));
-				
-				return result;
+				String uri = route.evaluateTo(paramsContext);
+				ResultStrategy resultStrategy = route.getType().getResultStrategy();
+				return new Result(paramsContext, resultStrategy, uri);
 			}
 		}
 		if (logger.isTraceEnabled()) logger.trace("NiceURL doesn't know this URL");

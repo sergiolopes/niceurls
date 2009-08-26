@@ -13,18 +13,14 @@ public class Result {
 	private ParamsContext paramsContext;
 	
 
-	void setStrategy(ResultStrategy strategy) {
+	public Result(ParamsContext paramsContext, ResultStrategy strategy, String uri) {
+		this.paramsContext = paramsContext;
 		this.strategy = strategy;
-	}
-
-	void setUri(String uri) {
 		this.uri = uri;
 	}
+
 	public ParamsContext getParamsContext() {
 		return paramsContext;
-	}
-	void setParamsContext(ParamsContext paramsContext) {
-		this.paramsContext = paramsContext;
 	}
 	
 	/**
