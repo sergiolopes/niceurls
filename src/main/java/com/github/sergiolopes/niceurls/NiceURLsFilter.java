@@ -71,7 +71,7 @@ public class NiceURLsFilter implements Filter{
 			return;
 		}
 		
-		request.putParameters(result.getParameters());			
+		request.putParameters(result.getParamsContext());			
 		result.execute(request, response);
 	}
 

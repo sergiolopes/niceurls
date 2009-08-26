@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import com.github.sergiolopes.niceurls.resolver.ParamsContext;
+
 /**
  * Overrides all parameter methods to get values from our special Map 
  */
@@ -68,7 +70,7 @@ public class NiceHttpServletRequest extends HttpServletRequestWrapper {
 		return paramValues;
 	}
 	
-	public void putParameters(Map<String, String> params) {
-		this.urlParameters.putAll(params);
+	public void putParameters(ParamsContext params) {
+		this.urlParameters.putAll(params.getParametersAsMap());
 	}
 }

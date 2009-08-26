@@ -1,7 +1,5 @@
 package com.github.sergiolopes.niceurls.resolver;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +19,9 @@ public class Result {
 	void setUri(String uri) {
 		this.uri = uri;
 	}
+	public ParamsContext getParamsContext() {
+		return paramsContext;
+	}
 	void setParamsContext(ParamsContext paramsContext) {
 		this.paramsContext = paramsContext;
 	}
@@ -30,13 +31,5 @@ public class Result {
 	 */
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		strategy.execute(uri, request, response);		
-	}
-
-	/**
-	 * Returns all parameters names and values
-	 * @return
-	 */
-	public Map<String,String> getParameters() {
-		return paramsContext.getParameters();
 	}
 }
