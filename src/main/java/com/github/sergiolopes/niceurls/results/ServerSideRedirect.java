@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 
-public class ServerSideRedirect extends ResultStrategy {
+public class ServerSideRedirect implements ResultStrategy {
 
 	private final static Logger logger = Logger.getLogger(ServerSideRedirect.class);
 	
@@ -21,6 +21,4 @@ public class ServerSideRedirect extends ResultStrategy {
 		}
 	}
 
-
-	
 }

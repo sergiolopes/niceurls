@@ -9,21 +9,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  *  Implementations should be prepared to instance sharing (possibly by not having state).
  */
-public abstract class ResultStrategy {
-
-	/**
-	 * Utility method
-	 * 
-	 * @param request
-	 * @param uri
-	 * @return
-	 */
-	protected final String absoluteURL(HttpServletRequest request, String uri) {
-		if (uri.startsWith("/"))
-			return request.getContextPath() + uri;
-		else
-			return uri;
-	}
+public interface ResultStrategy {
 	
-	public abstract void execute (String uri, HttpServletRequest request, HttpServletResponse response);
+	void execute (String uri, HttpServletRequest request, HttpServletResponse response);
 }
