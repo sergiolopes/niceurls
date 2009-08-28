@@ -73,6 +73,10 @@ public class Route {
 	}
 	
 	public String evaluateTo(ParamsContext context) {
+		if (this.to == null) {
+			return null;
+		}
+		
 		// find all variables and substitutes with parameter values
 		Pattern pattern = Pattern.compile("[^#]*\\#\\{([A-Za-z0-9\\.]+)\\}");
 		Matcher matcher = pattern.matcher(this.to);
