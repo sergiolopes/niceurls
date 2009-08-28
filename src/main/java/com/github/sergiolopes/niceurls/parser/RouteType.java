@@ -1,5 +1,6 @@
 package com.github.sergiolopes.niceurls.parser;
 
+import com.github.sergiolopes.niceurls.results.DoNothing;
 import com.github.sergiolopes.niceurls.results.MovedPermanently;
 import com.github.sergiolopes.niceurls.results.MovedTemporarily;
 import com.github.sergiolopes.niceurls.results.ResultStrategy;
@@ -12,7 +13,7 @@ import com.github.sergiolopes.niceurls.results.ServerSideRedirect;
 public enum RouteType {
 	
 	// order matters!! be careful
-	IGNORE            (">>!", null),
+	IGNORE            (">>!", new DoNothing()),
 	MOVED_PERMANENTLY (">>>", new MovedPermanently()), 
 	REDIRECT          (">>" , new MovedTemporarily()), 
 	SKIP_TO_VIEW      ("=>" , new ServerSideRedirect());

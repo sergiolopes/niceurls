@@ -12,10 +12,13 @@ public class Result {
 	private String uri;
 	private ParamsContext paramsContext;
 	
-
-	public Result(ParamsContext paramsContext, ResultStrategy strategy, String uri) {
-		this.paramsContext = paramsContext;
+	public Result(ResultStrategy strategy) {
 		this.strategy = strategy;
+	}
+	
+	public Result(ParamsContext paramsContext, ResultStrategy strategy, String uri) {
+		this(strategy);
+		this.paramsContext = paramsContext;
 		this.uri = uri;
 	}
 
@@ -24,9 +27,11 @@ public class Result {
 	}
 	
 	/**
-	 * Executes this result with the given request and response
+	 * Executes this result with the given request and response.
+	 * 
+	 * @return What happened inside this execution
 	 */
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		strategy.execute(uri, request, response);		
+	public ExecutionConsequence execute(HttpServletRequest request, HttpServletResponse response) {
+		return strategy.execute(uri, request, response);		
 	}
 }

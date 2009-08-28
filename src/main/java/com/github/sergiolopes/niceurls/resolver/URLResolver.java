@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import org.apache.log4j.Logger;
 
 import com.github.sergiolopes.niceurls.http.ParamsContext;
+import com.github.sergiolopes.niceurls.parser.RouteType;
 import com.github.sergiolopes.niceurls.results.ResultStrategy;
 
 
@@ -17,6 +18,7 @@ public class URLResolver {
 
 	private final static Logger logger = Logger.getLogger(URLResolver.class);
 	private final List<Route> routes;
+	private final Result nullResult = new Result(RouteType.IGNORE.getResultStrategy());
 	
 	public URLResolver() {
 		this.routes = new ArrayList<Route>();
@@ -26,6 +28,11 @@ public class URLResolver {
 		this.routes.add(route);
 	}
 
+	/**
+	 * Resolve some given URL
+	 * @param url URL relative to context
+	 * @return A {@link Result} that should not be null
+	 */
 	public Result resolveURL(String url) {
 		if (logger.isTraceEnabled()) logger.trace("Trying to resolve " + url);
 		
@@ -45,8 +52,9 @@ public class URLResolver {
 				return new Result(paramsContext, resultStrategy, uri);
 			}
 		}
+		
 		if (logger.isTraceEnabled()) logger.trace("NiceURL doesn't know this URL");
-		return null;
+		return nullResult;
 	}
 	
 	public List<Route> getRoutes() {
