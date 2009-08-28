@@ -5,13 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.github.sergiolopes.niceurls.resolver.ExecutionConsequence;
+
 
 public class ServerSideRedirect implements ResultStrategy {
 
 	private final static Logger logger = Logger.getLogger(ServerSideRedirect.class);
 	
-	@Override
-	public void execute(String uri, HttpServletRequest request, HttpServletResponse response) {
+	public ExecutionConsequence execute(String uri, HttpServletRequest request, HttpServletResponse response) {
 		if (logger.isDebugEnabled()) logger.debug("Redirecting to " + uri);
 		try {
 			request.getRequestDispatcher(uri).forward(request, response);
@@ -19,6 +20,8 @@ public class ServerSideRedirect implements ResultStrategy {
 			logger.error(e);
 			throw new RuntimeException(e);
 		}
+		
+		return ExecutionConsequence.REDIRECTED;
 	}
 
 }

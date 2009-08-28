@@ -3,6 +3,8 @@ package com.github.sergiolopes.niceurls.results;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.github.sergiolopes.niceurls.resolver.ExecutionConsequence;
+
 /**
  * Represents a result to an URL that should be executed.
  * It has a componentName, a logicName and one parameters Map.
@@ -11,5 +13,5 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ResultStrategy {
 	
-	void execute (String uri, HttpServletRequest request, HttpServletResponse response);
+	ExecutionConsequence execute (String uri, HttpServletRequest request, HttpServletResponse response);
 }
