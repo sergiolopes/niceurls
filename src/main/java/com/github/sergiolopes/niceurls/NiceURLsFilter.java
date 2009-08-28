@@ -23,7 +23,7 @@ import com.github.sergiolopes.niceurls.resolver.URLResolver;
 public class NiceURLsFilter implements Filter{
 
 	private static final Logger logger = Logger.getLogger(NiceURLsFilter.class);
-	private static final String DEFAULT_NICEURL_FILENAME = "/niceurl.routes";
+	private static final String DEFAULT_NICEURL_FILENAME = "/niceurls.routes";
 	private static final String ROUTES_FILENAME_PARAM = "niceurls_file";
 
 	private String contextName;
