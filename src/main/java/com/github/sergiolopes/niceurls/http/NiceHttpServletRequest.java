@@ -70,6 +70,7 @@ public class NiceHttpServletRequest extends HttpServletRequestWrapper {
 	}
 	
 	public void putParameters(ParamsContext params) {
-		this.urlParameters.putAll(params.getParametersAsMap());
+		if (params != null)
+			this.urlParameters.putAll(params.getParametersAsMap());
 	}
 }

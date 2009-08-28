@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.github.sergiolopes.niceurls.http.NiceHttpServletRequest;
 import com.github.sergiolopes.niceurls.parser.RoutesParser;
+import com.github.sergiolopes.niceurls.resolver.ExecutionConsequence;
 import com.github.sergiolopes.niceurls.resolver.Result;
 import com.github.sergiolopes.niceurls.resolver.URLResolver;
 
@@ -63,14 +64,13 @@ public class NiceURLsFilter implements Filter{
 		String uri = extractURI(request);
 		if (logger.isDebugEnabled()) logger.debug("Hit: "+ uri);
 
-		Result result = this.urlResolver.resolveURL(uri);
-		if (result == null) {
-			filterChain.doFilter(request, response);
-			return;
-		}
-		
+		Result result = this.urlResolver.resolveURL(uri);		
 		request.putParameters(result.getParamsContext());			
-		result.execute(request, response);
+		ExecutionConsequence consequence = result.execute(request, response);
+		
+		if (consequence.equals(ExecutionConsequence.REQUEST_FLOW_NOT_AFFECTED)) {
+			filterChain.doFilter(request, response);
+		}
 	}
 
 	private String extractURI(NiceHttpServletRequest request) {
