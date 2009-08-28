@@ -16,7 +16,7 @@ public class MovedPermanently implements ResultStrategy {
 		response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		response.addHeader("Location", absoluteURL(request, uri));
 		response.addIntHeader("Content-length", 0);
-		response.addDateHeader("Date", System.currentTimeMillis());	
+		response.addDateHeader("Date", System.currentTimeMillis());
 		
 		return ExecutionConsequence.REDIRECTED;
 	}

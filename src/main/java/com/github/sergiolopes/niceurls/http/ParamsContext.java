@@ -15,7 +15,7 @@ public class ParamsContext {
 		return this.parameters.get(key);
 	}
 	
-	Map<String, String> getParametersAsMap() {
+	public Map<String, String> getParametersAsMap() {
 		return parameters;
 	}
 

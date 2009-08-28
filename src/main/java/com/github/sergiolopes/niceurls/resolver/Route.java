@@ -52,7 +52,7 @@ public class Route {
 		from = from.replaceAll("\\.", "\\\\.");
 
 		// wildcard matches anything in the url
-		from = from.replaceAll("\\*", "(.*)");
+		from = from.replaceAll("\\*", ".*");
 		
 		from = from.replaceAll("THISISAHACK", "*");
 		

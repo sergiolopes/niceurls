@@ -26,6 +26,14 @@ public class Result {
 		return paramsContext;
 	}
 	
+	String getUri() {
+		return uri;
+	}
+	
+	ResultStrategy getStrategy() {
+		return strategy;
+	}
+	
 	/**
 	 * Executes this result with the given request and response.
 	 * 

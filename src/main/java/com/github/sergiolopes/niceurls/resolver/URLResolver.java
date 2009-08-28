@@ -18,10 +18,15 @@ public class URLResolver {
 
 	private final static Logger logger = Logger.getLogger(URLResolver.class);
 	private final List<Route> routes;
-	private final Result nullResult = new Result(RouteType.IGNORE.getResultStrategy());
+	private Result nullResult = new Result(RouteType.IGNORE.getResultStrategy());
 	
 	public URLResolver() {
 		this.routes = new ArrayList<Route>();
+	}
+	
+	URLResolver(Result nullResult) { /* for tests only */
+		this();
+		this.nullResult = nullResult;
 	}
 	
 	public void addRoute(Route route) {
@@ -43,8 +48,8 @@ public class URLResolver {
 				ParamsContext paramsContext = new ParamsContext();
 				// parse variables
 				int i = 1;
-				for (String param : route.getParamNames()) {
-					paramsContext.addParameter(param, m.group(i++));
+				for (String paramName : route.getParamNames()) {
+					paramsContext.addParameter(paramName, m.group(i++));
 				}
 
 				String uri = route.evaluateTo(paramsContext);
@@ -60,6 +65,4 @@ public class URLResolver {
 	public List<Route> getRoutes() {
 		return routes;
 	}
-
-
 }
