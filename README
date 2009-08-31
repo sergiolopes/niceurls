@@ -1,0 +1,12 @@
+NiceURLs Filter by sergiolopes
+==============================
+
+A Java Servlet Filter to help you implement nice external URLs and SEO. It has 
+features to implement many kinds of redirects (301, 302, server-side, client-side).
+It's something like Apache's mod_rewrite or UrlRewriteFilter but much simpler.
+
+Just create a file called niceurls.routes and put in your classpath. This file has
+a special syntax to configure the redirects. To learn the syntax, please see the 
+test file:
+
+  http://github.com/sergiolopes/niceurls/blob/master/src/test/resources/niceurls.routes
