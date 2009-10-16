@@ -12,7 +12,9 @@ public class MovedPermanently implements ResultStrategy {
 	private final static Logger logger = Logger.getLogger(MovedPermanently.class);
 	
 	public ExecutionConsequence execute(String uri, HttpServletRequest request, HttpServletResponse response) {
-		if (logger.isDebugEnabled()) logger.debug("Redirecting to " + absoluteURL(request, uri));
+		if (logger.isDebugEnabled()) 
+			logger.debug("Redirecting to " + absoluteURL(request, uri));
+		
 		response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		response.addHeader("Location", absoluteURL(request, uri));
 		response.addIntHeader("Content-length", 0);
@@ -23,8 +25,11 @@ public class MovedPermanently implements ResultStrategy {
 	
 	private String absoluteURL(HttpServletRequest request, String uri) {
 		if (uri.startsWith("/"))
-			return request.getContextPath() + uri;
-		else
-			return uri;
+			uri = request.getContextPath() + uri;
+		
+		if (request.getQueryString() != null)
+			uri = uri + "?" + request.getQueryString();
+		
+		return uri;
 	}
 }

@@ -26,6 +26,7 @@ public class MovedTemporarilyTest extends BaseResultStrategyTest {
 		final String uri = "/anything";
 		context.checking(new Expectations(){{
 			allowing(request).getContextPath();will(returnValue(""));
+			allowing(request).getQueryString();will(returnValue(null));
 			one(response).sendRedirect(uri);
 		}});
 		
@@ -40,6 +41,7 @@ public class MovedTemporarilyTest extends BaseResultStrategyTest {
 		
 		context.checking(new Expectations(){{
 			allowing(request).getContextPath();will(returnValue(contextPath));
+			allowing(request).getQueryString();will(returnValue(null));
 			one(response).sendRedirect(contextPath + uri);
 		}});
 		
@@ -54,6 +56,7 @@ public class MovedTemporarilyTest extends BaseResultStrategyTest {
 		
 		context.checking(new Expectations(){{
 			allowing(request).getContextPath();will(returnValue(contextPath));
+			allowing(request).getQueryString();will(returnValue(null));
 			one(response).sendRedirect(uri);
 		}});
 		
@@ -69,7 +72,24 @@ public class MovedTemporarilyTest extends BaseResultStrategyTest {
 		
 		context.checking(new Expectations(){{
 			allowing(request).getContextPath();will(returnValue(contextPath));
+			allowing(request).getQueryString();will(returnValue(null));
 			one(response).sendRedirect(uri);
+		}});
+		
+		ExecutionConsequence consequence = redirect.execute(uri, request, response);
+		assertThat(consequence, is(ExecutionConsequence.REDIRECTED));
+	}
+	
+	@Test
+	public void redirectToQueryString() throws IOException {
+		final String uri = "anything";
+		final String contextPath = "/context";
+		final String queryString = "a=b&c=d+e&f=%3C%3E";
+		
+		context.checking(new Expectations(){{
+			allowing(request).getContextPath();will(returnValue(contextPath));
+			allowing(request).getQueryString();will(returnValue(queryString));
+			one(response).sendRedirect(uri + "?" + queryString);
 		}});
 		
 		ExecutionConsequence consequence = redirect.execute(uri, request, response);

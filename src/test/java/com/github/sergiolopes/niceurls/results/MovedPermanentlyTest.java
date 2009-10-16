@@ -19,10 +19,16 @@ import com.github.sergiolopes.niceurls.resolver.ExecutionConsequence;
 public class MovedPermanentlyTest extends BaseResultStrategyTest {
 
 	private MovedPermanently redirect;
+	private String contextPath;
 
 	@Before
 	public void setup() {
 		this.redirect = new MovedPermanently();
+		this.contextPath = "/context";
+		
+		context.checking(new Expectations(){{
+			allowing(request).getContextPath();will(returnValue(contextPath));
+		}});
 	}
 	
 	private void headerExpectations() {
@@ -39,8 +45,8 @@ public class MovedPermanentlyTest extends BaseResultStrategyTest {
 		
 		final String uri = "/anything";
 		context.checking(new Expectations(){{
-			allowing(request).getContextPath();will(returnValue(""));
-			one(response).addHeader("Location", uri);
+			allowing(request).getQueryString();will(returnValue(null));
+			one(response).addHeader("Location", contextPath + uri);
 		}});
 		
 		ExecutionConsequence consequence = redirect.execute(uri, request, response);
@@ -52,10 +58,9 @@ public class MovedPermanentlyTest extends BaseResultStrategyTest {
 		headerExpectations();
 		
 		final String uri = "/anything";
-		final String contextPath = "/context";
 		
 		context.checking(new Expectations(){{
-			allowing(request).getContextPath();will(returnValue(contextPath));
+			allowing(request).getQueryString();will(returnValue(null));
 			one(response).addHeader("Location", contextPath + uri);
 		}});
 		
@@ -68,10 +73,9 @@ public class MovedPermanentlyTest extends BaseResultStrategyTest {
 		headerExpectations();
 		
 		final String uri = "anything";
-		final String contextPath = "/context";
 		
 		context.checking(new Expectations(){{
-			allowing(request).getContextPath();will(returnValue(contextPath));
+			allowing(request).getQueryString();will(returnValue(null));
 			one(response).addHeader("Location", uri);
 		}});
 		
@@ -79,17 +83,31 @@ public class MovedPermanentlyTest extends BaseResultStrategyTest {
 		assertThat(consequence, is(ExecutionConsequence.REDIRECTED));
 	}
 	
-	
 	@Test
 	public void externalRedirect() throws IOException {
 		headerExpectations();
 		
 		final String uri = "http://anything";
-		final String contextPath = "/context";
 		
 		context.checking(new Expectations(){{
-			allowing(request).getContextPath();will(returnValue(contextPath));
+			allowing(request).getQueryString();will(returnValue(null));
 			one(response).addHeader("Location", uri);
+		}});
+		
+		ExecutionConsequence consequence = redirect.execute(uri, request, response);
+		assertThat(consequence, is(ExecutionConsequence.REDIRECTED));
+	}
+	
+	@Test
+	public void redirectToQueryString() throws IOException {
+		headerExpectations();
+		
+		final String uri = "anything";
+		final String queryString = "a=b&c=d+e&f=%3C%3E";
+		
+		context.checking(new Expectations(){{
+			allowing(request).getQueryString();will(returnValue(queryString));
+			one(response).addHeader("Location", uri + "?" + queryString);
 		}});
 		
 		ExecutionConsequence consequence = redirect.execute(uri, request, response);

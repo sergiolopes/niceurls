@@ -27,8 +27,11 @@ public class MovedTemporarily implements ResultStrategy {
 
 	private String absoluteURL(HttpServletRequest request, String uri) {
 		if (uri.startsWith("/"))
-			return request.getContextPath() + uri;
-		else
-			return uri;
+			uri = request.getContextPath() + uri;
+		
+		if (request.getQueryString() != null)
+			uri = uri + "?" + request.getQueryString();
+		
+		return uri;
 	}
 }
