@@ -15,6 +15,9 @@
 # Redirection to external sources
 /vraptor/      >>    http://vraptor.org
 
+# Optional last slash
+/caelum/?      >>    http://www.caelumobjects.com
+
 # Client side redirection with moved permanently header (301)
 /old.jsp      >>>    /new.jsp
 
