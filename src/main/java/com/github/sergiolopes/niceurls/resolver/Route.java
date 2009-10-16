@@ -77,14 +77,11 @@ public class Route {
 		}
 		
 		// find all variables and substitutes with parameter values
-		Pattern pattern = Pattern.compile("[^#]*\\#\\{([A-Za-z0-9\\.]+)\\}");
+		Pattern pattern = Pattern.compile("\\#\\{([A-Za-z0-9\\.]+)\\}");
 		Matcher matcher = pattern.matcher(this.to);
 
 		String finalConsequence = this.to;
-		while (!matcher.hitEnd()) {
-			if(!matcher.find()) {
-				break;
-			}
+		while (matcher.find()) {
 			String var = matcher.group(1);
 			finalConsequence = finalConsequence.replace("#{" + var + "}", context.getParameter(var));
 		}
