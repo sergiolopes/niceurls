@@ -2,7 +2,9 @@ package com.github.sergiolopes.niceurls.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -38,7 +40,11 @@ public class RoutesParser {
 		File file = new File(fileName);
 		this.path = file.getParent();
 
-		Scanner s = new Scanner(file);
+		parseReader(new FileReader(file));
+	}
+
+	private void parseReader(Reader reader) throws IOException {
+		Scanner s = new Scanner(reader);
 
 		while (s.hasNextLine()) {
 			parseLine(s.nextLine().trim());
@@ -53,13 +59,13 @@ public class RoutesParser {
 
 	private void parseLine(String line) throws IOException {
 		if (line.startsWith("#include")) {
-			String otherFile = line.substring("#include".length()).trim();
-			parseFile(this.path + "/" + otherFile);
-			return;
+			parseIncludedFile(line);
+		} else if (!isComment(line)) {
+			parseRouteLine(line);
 		}
-		
-		if (isComment(line)) return;
-		
+	}
+
+	private void parseRouteLine(String line) {
 		for (RouteType routeType : RouteType.values()) {
 			if (line.indexOf(routeType.getSeparator()) > 0) {
 				
@@ -71,6 +77,11 @@ public class RoutesParser {
 				break;
 			}
 		}
+	}
+
+	private void parseIncludedFile(String line) throws IOException {
+		String otherFile = line.substring("#include".length()).trim();
+		new RoutesParser(resolver).parseFile(this.path + "/" + otherFile);
 	}
 
 }
