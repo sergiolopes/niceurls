@@ -18,6 +18,9 @@
 # Client side redirection with moved permanently header (301)
 /old.jsp      >>>    /new.jsp
 
+# Redirect an entire path to another location
+/context*      >>>   http://context.domain.com#{wildcard}
+
 # All comments lines start with #
 # /comment/    >>    /ignored.html
 
