@@ -24,8 +24,6 @@ public class RouteFromTest {
 	
 	private Route route;
 	
-	/** SECTION: Test From: **/
-	
 	@Test
 	public void testSimpleFromURL() {
 		final String from = "/simple";
@@ -42,7 +40,7 @@ public class RouteFromTest {
 	public void testFromURLWithWildcard() {
 		final String from = "/path/*/";
 		final String expectedPattern = "/path/(.*)/";
-		testFrom(from, expectedPattern);
+		testFrom(from, expectedPattern, "wildcard");
 	}
 	
 	@Test
@@ -56,7 +54,7 @@ public class RouteFromTest {
 	public void testFromURLWithOneVariableAndOneWildcard() {
 		final String from = "/path/*/:{variable}/";
 		final String expectedPattern = "/path/(.*)/([^/]*)/";
-		testFrom(from, expectedPattern, "variable");
+		testFrom(from, expectedPattern, "wildcard", "variable");
 	}
 	
 	@Test

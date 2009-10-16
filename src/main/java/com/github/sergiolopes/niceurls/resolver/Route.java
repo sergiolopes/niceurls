@@ -36,12 +36,11 @@ public class Route {
 	 */
 	private void parseFrom(String from) {
 		// add params  (dots allowed)
-		Pattern pattern = Pattern.compile("[^:]*:\\{([A-Za-z0-9\\.]+)\\}");
+		Pattern pattern = Pattern.compile("([\\*])|(?::\\{([A-Za-z0-9\\.]+)\\})");
 		Matcher matcher = pattern.matcher(from);
 		
-		while (!matcher.hitEnd()) {
-			if(!matcher.find()) break;
-			this.paramNames.add(matcher.group(1));
+		while (matcher.find()) {
+			this.paramNames.add(matcher.group(1) != null? "wildcard" : matcher.group(2));
 		}
 		
 		// variables starts with : (dots allowed)
