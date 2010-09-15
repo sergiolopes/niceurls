@@ -47,3 +47,7 @@
 
 # Also, we can ignore some URLs (just call doFilter)
 /ignore >>!
+
+# Finally, not found things
+/notFound =404
+/goneForever =410
