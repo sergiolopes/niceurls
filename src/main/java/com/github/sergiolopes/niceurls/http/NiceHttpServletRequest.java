@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
-
 /**
  * Overrides all parameter methods to get values from our special Map 
  */
@@ -29,7 +28,7 @@ public class NiceHttpServletRequest extends HttpServletRequestWrapper {
 		return parameter;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Enumeration getParameterNames() {
 		final Enumeration normal = super.getParameterNames();
@@ -53,7 +52,7 @@ public class NiceHttpServletRequest extends HttpServletRequestWrapper {
 		};
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public Map getParameterMap() {
 		Map map = new HashMap(urlParameters);

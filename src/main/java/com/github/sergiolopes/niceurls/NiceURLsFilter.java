@@ -30,7 +30,7 @@ public class NiceURLsFilter implements Filter{
 	private URLResolver urlResolver;
 
 	public void init(final FilterConfig fc) throws ServletException {
-		if (logger.isTraceEnabled()) logger.trace("Filter init");
+		if (logger.isTraceEnabled()) logger.trace("NiceURLs init");
 		
 		String configFile = resolveConfigFile(fc.getServletContext());
 		
